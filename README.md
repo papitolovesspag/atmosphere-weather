@@ -3,6 +3,7 @@
 A modern, responsive weather dashboard that provides real-time climate data with a dynamic "Glassmorphism" UI.
 
 **[🔴 LIVE DEMO: Click here to view the App] https://atmosphere-weather.onrender.com/**
+[App Screenshot]<img width="3200" height="1550" alt="Atmosphere App" src="https://github.com/user-attachments/assets/7a5cf0e0-af9c-48c2-931f-a71bfad0c2b3" />
 
 ## 🚀 Key Features
 * **Dynamic UI:** Background gradients and icons change automatically based on live weather conditions (Sunny, Rainy, Stormy, etc.).
