@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Atmosphere | Live Climate Dashboard</title>
+    <link rel="icon" href="/favicon.png" type="image/png">
+    <link rel="stylesheet" href="/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<% 
+  let weatherClass = 'default';
+  let weatherIcon = 'fa-cloud'; // Default icon
+
+  if (content) {
+      const code = content.weathercode;
+      if (code === 0) {
+          weatherClass = 'sunny';
+          weatherIcon = 'fa-sun';
+      } else if (code >= 1 && code <= 3) {
+          weatherClass = 'cloudy';
+          weatherIcon = 'fa-cloud-sun';
+      } else if (code >= 45 && code <= 48) {
+          weatherClass = 'foggy';
+          weatherIcon = 'fa-smog';
+      } else if (code >= 51 && code <= 67) {
+          weatherClass = 'rainy';
+          weatherIcon = 'fa-cloud-rain';
+      } else if (code >= 80 && code <= 82) {
+          weatherClass = 'rainy';
+          weatherIcon = 'fa-cloud-showers-heavy';
+      } else if (code >= 71 && code <= 77) {
+          weatherClass = 'snowy';
+          weatherIcon = 'fa-snowflake';
+      } else if (code >= 95 && code <= 99) {
+          weatherClass = 'stormy';
+          weatherIcon = 'fa-bolt';
+      }
+  }
+%>
+
+<body class="<%= weatherClass %>">
+
+    <div class="glass-container">
+        <header>
+            <div class="logo">
+                <i class="fa-solid fa-wind"></i> Atmosphere
+            </div>
+            <p class="subtitle">Live Climate Dashboard</p>
+        </header>
+        
+        <form action="/" method="POST" class="search-bar">
+            <i class="fa-solid fa-magnifying-glass search-icon"></i>
+            <input type="text" name="city" placeholder="Search city..." required autocomplete="off">
+            <button type="submit">Check</button>
+        </form>
+
+        <% if (error) { %>
+            <div class="error-badge">
+                <i class="fa-solid fa-circle-exclamation"></i> <%= error %>
+            </div>
+        <% } %>
+
+        <% if (content) { %>
+            <main class="weather-display">
+                <div class="current-weather">
+                    <div class="main-temp">
+                        <%= content.temperature %>°
+                    </div>
+                    <div class="weather-status">
+                        <i class="fa-solid <%= weatherIcon %>"></i>
+                        <span>
+                             <% if (content.weathercode === 0) { %> Clear Sky
+                             <% } else if (content.weathercode <= 3) { %> Cloudy
+                             <% } else if (content.weathercode <= 67) { %> Rainy
+                             <% } else if (content.weathercode <= 99) { %> Stormy
+                             <% } else { %> Unknown <% } %>
+                        </span>
+                    </div>
+                </div>
+
+                <div class="location-container">
+                    <div class="city-name">
+                        <i class="fa-solid fa-location-dot"></i> <%= city %>, <%= country %>
+                    </div>
+                    <div class="live-date" id="dateDisplay"></div>
+                </div>
+                <div class="metrics-grid">
+                    <div class="metric-card">
+                        <i class="fa-solid fa-wind"></i>
+                        <div>
+                            <span class="label">Wind</span>
+                            <span class="value"><%= content.windspeed %> <small>km/h</small></span>
+                        </div>
+                    </div>
+                    <div class="metric-card">
+                        <i class="fa-regular fa-compass"></i>
+                        <div>
+                            <span class="label">Direction</span>
+                            <span class="value"><%= content.winddirection %>°</span>
+                        </div>
+                    </div>
+                </div>
+                </main>
+                
+                <footer class="app-footer">
+                    <p>Engineered by <strong>Kosi</strong></p>
+                    <div class="social-links">
+                        <a href="YOUR_GITHUB_LINK" target="_blank" title="GitHub"><i class="fa-brands fa-github"></i></a>
+                        <a href="YOUR_UPWORK_LINK" target="_blank" title="Hire Me"><i class="fa-solid fa-briefcase"></i></a>
+                    </div>
+                </footer>
+                
+                <script>
+                    const dateOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+                    document.getElementById('dateDisplay').textContent = new Date().toLocaleDateString('en-US', dateOptions);
+                </script>
+        <% } else { %>
+            <div class="empty-state">
+                <i class="fa-solid fa-cloud-moon" style="font-size: 4rem; opacity: 0.5;"></i>
+                <p>Enter a city to explore the atmosphere.</p>
+            </div>
+        <% } %>
+    </div>
+
+</body>
+</html>

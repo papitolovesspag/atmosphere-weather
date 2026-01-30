@@ -1,0 +1,253 @@
+/* RESET & BASE */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    overflow: hidden;
+    transition: background 1s ease-in-out;
+}
+
+/* --- DYNAMIC BACKGROUNDS (More Modern Gradients) --- */
+body.default { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+body.sunny   { background: linear-gradient(135deg, #FFC371 0%, #FF5F6D 100%); } /* Warm Sunset */
+body.cloudy  { background: linear-gradient(135deg, #5D6D7E 0%, #BFC9CA 100%); } /* Steel Grey */
+body.rainy   { background: linear-gradient(135deg, #141E30 0%, #243B55 100%); } /* Deep Blue */
+body.stormy  { background: linear-gradient(135deg, #232526 0%, #414345 100%); } /* Dark Carbon */
+body.snowy   { background: linear-gradient(135deg, #E6DADA 0%, #274046 100%); } /* Icy */
+body.foggy   { background: linear-gradient(135deg, #3E5151 0%, #DECBA4 100%); } /* Muted Earth */
+
+/* --- GLASS CONTAINER (The "iPhone" Look) --- */
+.glass-container {
+    background: rgba(255, 255, 255, 0.15); /* Semi-transparent white */
+    backdrop-filter: blur(15px); /* The Blur Effect */
+    -webkit-backdrop-filter: blur(15px); /* Safari Support */
+    border: 1px solid rgba(255, 255, 255, 0.2); /* Subtle Border */
+    padding: 2.5rem;
+    border-radius: 24px;
+    width: 400px;
+    max-width: 90%;
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+    animation: floatIn 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+/* --- HEADER --- */
+header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.logo {
+    font-size: 1.5rem;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    margin-bottom: 0.2rem;
+}
+
+.subtitle {
+    font-size: 0.85rem;
+    opacity: 0.8;
+    font-weight: 300;
+}
+
+/* --- SEARCH BAR --- */
+.search-bar {
+    display: flex;
+    position: relative;
+    margin-bottom: 2rem;
+}
+
+.search-bar input {
+    width: 100%;
+    padding: 12px 15px 12px 45px; /* Space for icon */
+    border: none;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+    font-size: 1rem;
+    font-family: inherit;
+    outline: none;
+    transition: 0.3s;
+}
+
+.search-bar input::placeholder {
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.search-bar input:focus {
+    background: rgba(255, 255, 255, 0.3);
+    box-shadow: 0 0 0 2px rgba(255,255,255,0.4);
+}
+
+.search-icon {
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    opacity: 0.7;
+    pointer-events: none;
+}
+
+.search-bar button {
+    display: none; /* Hide button, enter key works naturally */
+}
+
+/* --- WEATHER DISPLAY --- */
+.weather-display {
+    text-align: center;
+    animation: fadeUp 0.5s ease-out;
+}
+
+.current-weather {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+.main-temp {
+    font-size: 5rem;
+    font-weight: 600;
+    line-height: 1;
+    letter-spacing: -2px;
+}
+
+.weather-status {
+    font-size: 1.2rem;
+    font-weight: 400;
+    opacity: 0.9;
+    margin-top: 10px;
+    background: rgba(0,0,0,0.1);
+    padding: 5px 15px;
+    border-radius: 20px;
+}
+
+.city-name {
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    opacity: 0.8;
+    margin-bottom: 2rem;
+}
+
+/* --- METRICS GRID --- */
+.metrics-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
+
+.metric-card {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 15px;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: transform 0.2s;
+}
+
+.metric-card:hover {
+    transform: translateY(-3px);
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.metric-card i {
+    font-size: 1.2rem;
+    opacity: 0.7;
+}
+
+.metric-card .label {
+    display: block;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    opacity: 0.7;
+}
+
+.metric-card .value {
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+/* --- UTILITIES --- */
+.error-badge {
+    background: rgba(255, 82, 82, 0.8);
+    padding: 10px;
+    border-radius: 10px;
+    text-align: center;
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+    backdrop-filter: blur(5px);
+}
+
+.empty-state {
+    text-align: center;
+    padding: 2rem 0;
+    opacity: 0.7;
+}
+
+/* --- ANIMATIONS --- */
+@keyframes floatIn {
+    from { opacity: 0; transform: translateY(20px) scale(0.95); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes fadeUp {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* --- DATE & LOCATION TWEAKS --- */
+.location-container {
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+.live-date {
+    font-size: 0.9rem;
+    font-weight: 300;
+    opacity: 0.8;
+    margin-top: 5px;
+    letter-spacing: 0.5px;
+}
+
+/* --- FOOTER --- */
+.app-footer {
+    margin-top: 2rem;
+    padding-top: 1rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+    font-size: 0.75rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    opacity: 0.8;
+}
+
+.app-footer strong {
+    font-weight: 600;
+    color: #fff;
+}
+
+.social-links {
+    display: flex;
+    gap: 15px;
+}
+
+.social-links a {
+    color: white;
+    font-size: 1.1rem;
+    transition: transform 0.2s, opacity 0.2s;
+}
+
+.social-links a:hover {
+    transform: scale(1.2);
+    opacity: 1;
+}
